@@ -1,11 +1,6 @@
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
+import { DrawerItem } from "@react-navigation/drawer";
 import { View, Text, StyleSheet } from "react-native";
 import { FontAwesome, Foundation } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import Colors from "../utilities/Colors";
 
@@ -32,28 +27,13 @@ function Menu(props) {
           onPress={() => navigation.navigate("Indicadores")}
         />
         <DrawerItem
-          label="Feedbacks"
+          label="Novedades"
           labelStyle={{ color: Colors.primary }}
-          onPress={() => navigation.navigate("HistorialFeedbacks")}
+          onPress={() => navigation.navigate("Noticias")}
           icon={() => (
-            <FontAwesome5 name="lightbulb" size={20} color={Colors.primary} />
+            <FontAwesome name="newspaper-o" size={20} color={Colors.primary} />
           )}
         />
-
-        <DrawerContentScrollView {...props}>
-          <DrawerItem
-            label="Novedades"
-            labelStyle={{ color: Colors.primary }}
-            onPress={() => navigation.navigate("Noticias")}
-            icon={() => (
-              <FontAwesome
-                name="newspaper-o"
-                size={20}
-                color={Colors.primary}
-              />
-            )}
-          />
-        </DrawerContentScrollView>
         <DrawerItem
           label="Login"
           labelStyle={{ color: Colors.primary }}

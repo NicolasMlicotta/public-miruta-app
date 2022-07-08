@@ -5,8 +5,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import {
   getFirestore,
-  doc,
-  getDoc,
   collection,
   query,
   where,
@@ -17,11 +15,9 @@ import {
 
 import {
   View,
-  Button,
   StyleSheet,
   Text,
   SafeAreaView,
-  StatusBar,
   ScrollView,
   Pressable,
 } from "react-native";
@@ -44,6 +40,7 @@ const Indicadores = ({ navigation }) => {
   const [filterMes, setFilterMes] = useState("seleccione");
   const [mostrarFechas, setMostrarFechas] = useState(true);
   const [fechaFiltrada, setFechaFiltrada] = useState({});
+  const [autenticado, setAutenticado] = useState(false);
 
   const reduceInfo = (querySnap) => {
     //acumuladores
@@ -88,6 +85,7 @@ const Indicadores = ({ navigation }) => {
 
     //cambiar por querySnap
     querySnap.forEach((doc) => {
+      console.log(doc);
       let val = doc.data();
       // parseFloat('0,04'.replace(/,/, '.')); // 0.04
       //valores (10)
@@ -255,14 +253,14 @@ const Indicadores = ({ navigation }) => {
       } else if (diez) {
         const q = query(
           collection(db, "dailyupload/" + "driversdata/" + ref),
-          orderBy("fecha", "desc"),
+          orderBy("aniomesdia", "desc"),
           limit(10)
         );
         reduceInfo(await getDocs(q));
       } else {
         const q = query(
           collection(db, "dailyupload/" + "driversdata/" + ref),
-          orderBy("fecha", "desc"),
+          orderBy("aniomesdia", "desc"),
           limit(1)
         );
         reduceInfo(await getDocs(q));
@@ -276,6 +274,7 @@ const Indicadores = ({ navigation }) => {
       if (user) {
         setEmail(user.email.split("_")[0]);
         fetchData(user.email.split("_")[0]);
+        setAutenticado(true);
         // ...
       } else {
         alert("Inicie Sesión");
@@ -314,92 +313,109 @@ const Indicadores = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.botonesContainer}>
-          <View style={styles.fecha}>
-            {mostrarFechas ? (
-              <Text>{minDate + " - " + maxDate}</Text>
-            ) : (
-              <Text>{fechaFiltrada.mes + " " + fechaFiltrada.anio}</Text>
-            )}
+      {autenticado && (
+        <ScrollView>
+          <View style={styles.botonesContainer}>
+            <View style={styles.fecha}>
+              {mostrarFechas ? (
+                <Text>{minDate + " - " + maxDate}</Text>
+              ) : (
+                <Text>{fechaFiltrada.mes + " " + fechaFiltrada.anio}</Text>
+              )}
+            </View>
+            <Pressable
+              style={styles.iconbox}
+              onPress={() => handleModal(!mostrarFiltros)}
+            >
+              <FontAwesome name="filter" size={24} color="black" />
+            </Pressable>
           </View>
-          <Pressable
-            style={styles.iconbox}
-            onPress={() => handleModal(!mostrarFiltros)}
-          >
-            <FontAwesome name="filter" size={24} color="black" />
+          {mostrarFiltros && (
+            <View style={{ paddingHorizontal: 14 }}>
+              <View>
+                <B>Año</B>
+                <Picker
+                  selectedValue={filterAnio}
+                  onValueChange={(itemValue) => setFilterAnio(itemValue)}
+                  style={styles.picker}
+                >
+                  <Picker.Item label="2022" value="2022" />
+                  <Picker.Item label="2023" value="2023" />
+                </Picker>
+                <B>Mes</B>
+                <Picker
+                  selectedValue={filterMes}
+                  onValueChange={(itemValue) => setFilterMes(itemValue)}
+                  style={styles.picker}
+                >
+                  <Picker.Item label="Seleccione" value="seleccione" />
+                  <Picker.Item label="Enero" value="1" />
+                  <Picker.Item label="Febrero" value="2" />
+                  <Picker.Item label="Marzo" value="3" />
+                  <Picker.Item label="Abril" value="4" />
+                  <Picker.Item label="Mayo" value="5" />
+                  <Picker.Item label="Junio" value="6" />
+                  <Picker.Item label="Julio" value="7" />
+                  <Picker.Item label="Agosto" value="8" />
+                  <Picker.Item label="Septiembre" value="9" />
+                  <Picker.Item label="Octubre" value="10" />
+                  <Picker.Item label="Noviembre" value="11" />
+                  <Picker.Item label="Diciembre" value="12" />
+                  <Picker.Item label="Todos" value="todos" />
+                </Picker>
+              </View>
+              <Pressable onPress={handleFiltros} style={styles.botonSemanas}>
+                <Text
+                  style={{ color: "white", textAlign: "center", fontSize: 14 }}
+                >
+                  Filtrar Indicadores
+                </Text>
+              </Pressable>
+              <View>
+                <Text style={{ marginTop: 40 }}>
+                  <B>También podés elegir:</B>
+                </Text>
+              </View>
+              <View style={styles.otrasOpciones}>
+                <Pressable onPress={handleClickUltimo} style={styles.opcion}>
+                  <MaterialIcons name="filter-1" size={24} color="black" />
+                  <Text style={styles.verOtros}> Ver último reparto</Text>
+                </Pressable>
+                <Pressable onPress={handleClickDiez} style={styles.opcion}>
+                  <MaterialCommunityIcons
+                    name="numeric-10-box-multiple-outline"
+                    size={24}
+                    color="black"
+                  />
+                  <Text style={styles.verOtros}> Ver últimos 10 repartos</Text>
+                </Pressable>
+              </View>
+            </View>
+          )}
+          {!mostrarFiltros && (
+            <View style={styles.scrollView}>
+              {indicadores.map((objeto) => {
+                return <Indicador datos={objeto} key={objeto.texto} />;
+              })}
+            </View>
+          )}
+        </ScrollView>
+      )}
+      {!autenticado && (
+        <View style={styles.scrollView}>
+          <Pressable onPress={() => navigation.navigate("Login")}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                padding: 10,
+              }}
+            >
+              Inicie Sesión
+            </Text>
           </Pressable>
         </View>
-        {mostrarFiltros && (
-          <View style={{ paddingHorizontal: 14 }}>
-            <View>
-              <B>Año</B>
-              <Picker
-                selectedValue={filterAnio}
-                onValueChange={(itemValue) => setFilterAnio(itemValue)}
-                style={styles.picker}
-              >
-                <Picker.Item label="2022" value="2022" />
-                <Picker.Item label="2023" value="2023" />
-              </Picker>
-              <B>Mes</B>
-              <Picker
-                selectedValue={filterMes}
-                onValueChange={(itemValue) => setFilterMes(itemValue)}
-                style={styles.picker}
-              >
-                <Picker.Item label="Seleccione" value="seleccione" />
-                <Picker.Item label="Enero" value="1" />
-                <Picker.Item label="Febrero" value="2" />
-                <Picker.Item label="Marzo" value="3" />
-                <Picker.Item label="Abril" value="4" />
-                <Picker.Item label="Mayo" value="5" />
-                <Picker.Item label="Junio" value="6" />
-                <Picker.Item label="Julio" value="7" />
-                <Picker.Item label="Agosto" value="8" />
-                <Picker.Item label="Septiembre" value="9" />
-                <Picker.Item label="Octubre" value="10" />
-                <Picker.Item label="Noviembre" value="11" />
-                <Picker.Item label="Diciembre" value="12" />
-                <Picker.Item label="Todos" value="todos" />
-              </Picker>
-            </View>
-            <Pressable onPress={handleFiltros} style={styles.botonSemanas}>
-              <Text
-                style={{ color: "white", textAlign: "center", fontSize: 14 }}
-              >
-                Filtrar Indicadores
-              </Text>
-            </Pressable>
-            <View>
-              <Text style={{ marginTop: 40 }}>
-                <B>También podés elegir:</B>
-              </Text>
-            </View>
-            <View style={styles.otrasOpciones}>
-              <Pressable onPress={handleClickUltimo} style={styles.opcion}>
-                <MaterialIcons name="filter-1" size={24} color="black" />
-                <Text style={styles.verOtros}> Ver último reparto</Text>
-              </Pressable>
-              <Pressable onPress={handleClickDiez} style={styles.opcion}>
-                <MaterialCommunityIcons
-                  name="numeric-10-box-multiple-outline"
-                  size={24}
-                  color="black"
-                />
-                <Text style={styles.verOtros}> Ver últimos 10 repartos</Text>
-              </Pressable>
-            </View>
-          </View>
-        )}
-        {!mostrarFiltros && (
-          <View style={styles.scrollView}>
-            {indicadores.map((objeto) => {
-              return <Indicador datos={objeto} key={objeto.texto} />;
-            })}
-          </View>
-        )}
-      </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
@@ -424,14 +440,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 8,
   },
-  boton: {
-    backgroundColor: "dodgerblue",
-    height: 30,
-    width: 80,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   fecha: {
     height: 30,
     width: "50%",
@@ -446,8 +454,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   botonSemanas: {
-    marginTop: 10,
-    backgroundColor: Colors.primary,
+    marginTop: 50,
+    backgroundColor: Colors.titleBackground,
     width: "auto",
     paddingHorizontal: 14,
     paddingVertical: 10,
@@ -465,6 +473,8 @@ const styles = StyleSheet.create({
   picker: {
     height: 32,
     marginBottom: 20,
+    borderColor: "red",
+    backgroundColor: "#f9f9f9c9",
   },
   otrasOpciones: {
     display: "flex",

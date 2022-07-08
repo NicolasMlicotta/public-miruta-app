@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
-
-import { setStatusBarTranslucent } from "expo-status-bar";
+import { Feather } from "@expo/vector-icons";
 
 export default function Indicador({ datos }) {
   //llega el indicador y un objeto con el valor y el target para comparar
@@ -23,15 +22,15 @@ export default function Indicador({ datos }) {
   const pulgar = () => {
     if (flag == "menor") {
       if (valor <= tgt) {
-        return <FontAwesome name="thumbs-o-up" size={42} color="green" />;
+        return <FontAwesome name="check" size={42} color="green" />;
       } else {
-        return <FontAwesome name="thumbs-o-down" size={42} color="red" />;
+        return <Feather name="alert-circle" size={42} color="#FF1700" />;
       }
     } else {
       if (valor >= tgt) {
-        return <FontAwesome name="thumbs-o-up" size={42} color="green" />;
+        return <FontAwesome name="check" size={42} color="green" />;
       } else {
-        return <FontAwesome name="thumbs-o-down" size={42} color="red" />;
+        return <Feather name="alert-circle" size={42} color="#FF1700" />;
       }
     }
   };

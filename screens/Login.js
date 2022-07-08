@@ -67,6 +67,7 @@ function Login({ navigation }) {
             value={usuario}
             placeholder="Escriba su DNI"
             style={styles.textInput}
+            keyboardType="numeric"
           />
           <View style={styles.btnContainer}>
             <Button
@@ -102,20 +103,22 @@ function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     minHeight: "10%",
-    marginTop: 16,
-    width: "90%",
+    marginTop: 8,
+    width: "96%",
     backgroundColor: Colors.fill,
     padding: 14,
     justifyContent: "center",
     marginHorizontal: "auto",
-    borderWidth: 1,
+
     borderColor: "rgba(0,0,0,0.4)",
     shadowColor: "#171717",
-    shadowOffset: { width: 2, height: 4 },
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
   btnContainer: {
+    display: "flex",
+    alignItems: "center",
     marginTop: 14,
   },
   textInput: {

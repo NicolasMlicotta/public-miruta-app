@@ -8,35 +8,14 @@ import NuevoFeedback from "./screens/feedbacks/NuevoFeedback";
 import HistorialFeedbacks from "./screens/feedbacks/HistorialFeedbacks";
 import Noticias from "./screens/Noticias";
 import FeedbackFull from "./screens/feedbacks/FeedbackFull";
-import { useState, useEffect } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import getUser from "./firebase/getUser";
-import getDb from "./firebase/getDb";
 import Menu from "./components/Menu";
-import Colors from "./utilities/Colors";
 
 export default function App() {
-  const [userData, setUserData] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [db, app] = getDb();
-  const auth = getAuth();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setUserData(await getUser(user.email));
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
-    });
-  }, []);
-
   const Drawer = createDrawerNavigator();
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="NuevoFeedback"
+        initialRouteName="Noticias"
         drawerContent={(props) => <Menu {...props} />}
       >
         <Drawer.Screen

@@ -22,10 +22,11 @@ const Noticias = () => {
     <ScrollView>
       <View
         style={{
-          width: "94%",
-          marginHorizontal: "auto",
+          display: "flex",
+          alignItems: "center",
           marginVertical: 12,
           minHeight: "100%",
+          width: "100%",
           paddingBottom: 60,
           backgroundColor: Colors.backgroundColor,
         }}

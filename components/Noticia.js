@@ -10,15 +10,16 @@ const Noticia = ({ data }) => {
   return (
     <View style={styles.container}>
       <View style={styles.tituloBox}>
-        <Bolder color={"white"}>
+        <Bolder color={Colors.titleBackground}>
           <Text style={styles.titulo}>{titulo} </Text>
         </Bolder>
         <View style={styles.fechaBox}>
-          <Text style={styles.subtitulo}>{cd}</Text>
-          <Text style={styles.subtitulo}>{fechaFormatted}</Text>
+          <Text style={styles.subtitulo}>{cd + " " + fechaFormatted}</Text>
         </View>
       </View>
-      <Image style={styles.imagen} source={imgurl} />
+      <View style={styles.imgContainer}>
+        <Image style={styles.imagen} source={{ uri: imgurl }} />
+      </View>
       <Text style={styles.texto}>{texto}</Text>
     </View>
   );
@@ -26,41 +27,37 @@ const Noticia = ({ data }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: "96%",
     backgroundColor: Colors.fill,
     paddingHorizontal: 10,
     paddingVertical: 10,
-    borderWidth: 1,
     borderColor: "rgba(0,0,0,0.4)",
     shadowColor: "#171717",
-    shadowOffset: { width: 2, height: 4 },
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
     marginBottom: 20,
   },
+  imgContainer: { display: "flex", alignItems: "center" },
   imagen: {
-    marginTop: 8,
     height: 300,
-    width: "100%",
+    width: 300,
     marginHorizontal: "auto",
     marginTop: 20,
     marginBottom: 12,
     resizeMode: "cover",
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
+    borderRadius: 8,
   },
   tituloBox: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: Colors.titleBackground,
+    alignItems: "flex-start",
+    backgroundColor: "white",
     overflow: "visible",
     marginHorizontal: -10,
-    marginTop: -10,
-    paddingVertical: 8,
+    // marginTop: -10,
+    // paddingTop: 8,
     paddingHorizontal: 12,
   },
   fechaBox: {
@@ -69,7 +66,7 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 18,
   },
-  subtitulo: { color: "white", fontSize: 12 },
+  subtitulo: { color: Colors.titleBackground, fontSize: 12 },
   texto: { fontSize: 16, paddingVertical: 6 },
 });
 

@@ -90,14 +90,14 @@ const BuscadorSku = () => {
             {data.Descripcion}
           </Text>
           <Text style={styles.textoSku}>
-            <Bolder>Cantidad por bulto: </Bolder>
+            <Bolder>Unidades por bulto: </Bolder>
             {data.UnidadesBulto}
           </Text>
           {data.ImgUrl ? (
-            <Image style={styles.imagen} source={data.ImgUrl} />
+            <Image style={styles.imagen} source={{ uri: data.ImgUrl }} />
           ) : (
             <View style={styles.imgPlaceholder}>
-              <Ionicons name="beer" size={60} color={Colors.secondary} />
+              <Ionicons name="beer" size={60} color={Colors.titleBackground} />
               <Text>Imagen no disponible</Text>
             </View>
           )}
@@ -122,16 +122,17 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    width: "90%",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     marginTop: 8,
+    width: "80%",
   },
   input: {
-    height: 36,
+    height: 42,
     borderWidth: 1,
-    padding: 10,
+    padding: 4,
     fontSize: 18,
     backgroundColor: Colors.fill,
+    width: "40%",
   },
   buttonContainer: {
     alignItems: "center",
