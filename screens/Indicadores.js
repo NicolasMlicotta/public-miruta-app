@@ -103,6 +103,7 @@ const Indicadores = ({ navigation }) => {
       pedidos_rechazados += clean(val.pedidos_rechazados);
       rmd_cantidad += clean(val.rmd_cantidad);
       rmd_puntaje += clean(val.rmd_puntaje);
+
       //targets (10)
       tgt_pedidos_rechazados += clean(val.tgt_pedidos_rechazados);
       tgt_bultos_rechazados += clean(val.tgt_bultos_rechazados);
@@ -143,7 +144,7 @@ const Indicadores = ({ navigation }) => {
     }
 
     prom_eficacia_mod = eficacia_modulaciones / counter;
-    prom_rmd_cantidad = rmd_cantidad / counter;
+    prom_rmd_cantidad = rmd_cantidad / pedidos_ruteados;
 
     //targets (10)
     tgt_pedidos_rechazados = tgt_pedidos_rechazados / counter;
@@ -340,6 +341,7 @@ const Indicadores = ({ navigation }) => {
                   style={styles.picker}
                 >
                   <Picker.Item label="Seleccione" value="seleccione" />
+                  <Picker.Item label="Todos" value="todos" />
                   <Picker.Item label="Enero" value="1" />
                   <Picker.Item label="Febrero" value="2" />
                   <Picker.Item label="Marzo" value="3" />
@@ -352,7 +354,6 @@ const Indicadores = ({ navigation }) => {
                   <Picker.Item label="Octubre" value="10" />
                   <Picker.Item label="Noviembre" value="11" />
                   <Picker.Item label="Diciembre" value="12" />
-                  <Picker.Item label="Todos" value="todos" />
                 </Picker>
               </View>
               <Pressable onPress={handleFiltros} style={styles.botonSemanas}>

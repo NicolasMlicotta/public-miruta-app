@@ -3,8 +3,8 @@ import React from "react";
 import Colors from "../utilities/Colors";
 import Bolder from "../components/Bolder";
 
-const Noticia = ({ data }) => {
-  const { cd, fecha, imgurl, texto, titulo } = data.data;
+const Noticia = (props) => {
+  const { cd, fecha, imgurl, texto, titulo } = props.datos.data;
   const fechaFormatted = new Date(Date.parse(fecha)).toLocaleDateString();
 
   return (

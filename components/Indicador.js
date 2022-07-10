@@ -12,7 +12,7 @@ export default function Indicador({ datos }) {
         return (val * 1).toFixed(2) + "ppm";
         break;
       case "Puntaje RMD":
-        return val;
+        return (val * 1).toFixed(2);
         break;
       default:
         return (val * 100).toFixed(2) + "%";

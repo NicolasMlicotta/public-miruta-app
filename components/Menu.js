@@ -22,7 +22,7 @@ function Menu(props) {
           label="Indicadores"
           labelStyle={{ color: Colors.primary }}
           icon={() => (
-            <Foundation name="target" size={22} color={Colors.primary} />
+            <Foundation name="target" size={24} color={Colors.primary} />
           )}
           onPress={() => navigation.navigate("Indicadores")}
         />
@@ -46,10 +46,13 @@ function Menu(props) {
 }
 const styles = StyleSheet.create({
   titulo: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
-    marginLeft: 16,
-    marginTop: 20,
+    marginLeft: 17,
+    marginTop: 60,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   itemsContainer: {
     marginTop: 16,
