@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   ActivityIndicator,
+  Keyboard,
 } from "react-native";
 import React from "react";
 import { initializeApp } from "firebase/app";
@@ -42,6 +43,7 @@ const BuscadorSku = () => {
     if (docSnap.exists()) {
       setData(docSnap.data());
       setCargando(false);
+      Keyboard.dismiss();
     } else {
       // doc.data() will be undefined in this case
       onChangeNumber("");
@@ -122,17 +124,17 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     marginTop: 8,
-    width: "80%",
+    width: "90%",
   },
   input: {
     height: 42,
     borderWidth: 1,
-    padding: 4,
+    paddingHorizontal: 10,
     fontSize: 18,
     backgroundColor: Colors.fill,
-    width: "40%",
+    width: 200,
   },
   buttonContainer: {
     alignItems: "center",

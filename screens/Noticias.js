@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView, RefreshControl } from "react-native";
 import React, { useState, useEffect } from "react";
 import getNoticias from "../firebase/getNoticias";
 import Noticia from "../components/Noticia";
@@ -6,6 +6,8 @@ import Colors from "../utilities/Colors";
 
 const Noticias = () => {
   const [noticias, setNoticias] = useState([]);
+  const [update, setUpdate] = useState(0);
+
   useEffect(() => {
     async function getData() {
       try {
@@ -16,10 +18,19 @@ const Noticias = () => {
       }
     }
     getData();
-  }, []);
+  }, [update]);
 
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={false}
+          onRefresh={() => {
+            setUpdate(update + 1);
+          }}
+        />
+      }
+    >
       <View
         style={{
           display: "flex",
