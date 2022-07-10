@@ -65,8 +65,9 @@ const styles = StyleSheet.create({
   },
   titulo: {
     fontSize: 18,
+    color: "black",
   },
-  subtitulo: { color: Colors.titleBackground, fontSize: 12 },
+  subtitulo: { color: "black", fontSize: 12 },
   texto: { fontSize: 16, paddingVertical: 6 },
 });
 

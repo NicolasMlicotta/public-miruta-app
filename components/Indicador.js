@@ -9,13 +9,13 @@ export default function Indicador({ datos }) {
   const evaluate = (val) => {
     switch (texto) {
       case "Roturas en reparto (DQI)":
-        return val + "ppm";
+        return (val * 1).toFixed(2) + "ppm";
         break;
       case "Puntaje RMD":
         return val;
         break;
       default:
-        return val * 100 + "%";
+        return (val * 100).toFixed(2) + "%";
     }
   };
 

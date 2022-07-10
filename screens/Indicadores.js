@@ -42,6 +42,10 @@ const Indicadores = ({ navigation }) => {
   const [fechaFiltrada, setFechaFiltrada] = useState({});
   const [autenticado, setAutenticado] = useState(false);
 
+  const clean = (valor) => {
+    return parseFloat(valor.replace(/,/, "."));
+  };
+
   const reduceInfo = (querySnap) => {
     //acumuladores
     let counter = 0;
@@ -71,7 +75,7 @@ const Indicadores = ({ navigation }) => {
     let prom_dqi = 0;
     let prom_eficacia_mod = 0;
     let prom_rmd_cantidad = 0;
-
+    //targets
     let tgt_pedidos_rechazados = 0;
     let tgt_bultos_rechazados = 0;
     let tgt_prom_disp_km = 0;
@@ -83,55 +87,43 @@ const Indicadores = ({ navigation }) => {
     let tgt_rmd_cantidad = 0;
     let tgt_prom_rmd = 0;
 
-    //cambiar por querySnap
     querySnap.forEach((doc) => {
-      console.log(doc);
       let val = doc.data();
-      // parseFloat('0,04'.replace(/,/, '.')); // 0.04
-      //valores (10)
-      bultos_rechazados += parseFloat(val.bultos_rechazados.replace(/,/, "."));
-      bultos_ruteado += parseFloat(val.bultos_ruteado.replace(/,/, "."));
-      dispersion_km += parseFloat(val.dispersion_km.replace(/,/, "."));
-      dispersion_tiempos += parseFloat(
-        val.dispersion_tiempos.replace(/,/, ".")
-      );
-      dqi += parseFloat(val.dqi.replace(/,/, "."));
-      eficacia_modulaciones += parseFloat(
+      bultos_rechazados += clean(val.bultos_rechazados);
+      bultos_ruteado += clean(val.bultos_ruteado);
+      dispersion_km += clean(val.dispersion_km);
+      dispersion_tiempos += clean(val.dispersion_tiempos.replace(/,/, "."));
+      dqi += clean(val.dqi);
+      eficacia_modulaciones += clean(
         val.eficacia_modulaciones.replace(/,/, ".")
       );
-      inicio_cierre += parseFloat(val.inicio_cierre.replace(/,/, "."));
-      modulaciones += parseFloat(val.modulaciones.replace(/,/, "."));
-      no_modulados += parseFloat(val.no_modulados.replace(/,/, "."));
-      ontime_uso += parseFloat(val.ontime_uso.replace(/,/, "."));
-      pedidos_ruteados += parseFloat(val.pedidos_ruteados.replace(/,/, "."));
-      pedidos_rechazados += parseFloat(
-        val.pedidos_rechazados.replace(/,/, ".")
-      );
-      rmd_cantidad += parseFloat(val.rmd_cantidad.replace(/,/, "."));
-      rmd_puntaje += parseFloat(val.rmd_puntaje.replace(/,/, "."));
+      inicio_cierre += clean(val.inicio_cierre);
+      modulaciones += clean(val.modulaciones);
+      no_modulados += clean(val.no_modulados);
+      ontime_uso += clean(val.ontime_uso);
+      pedidos_ruteados += clean(val.pedidos_ruteados);
+      pedidos_rechazados += clean(val.pedidos_rechazados.replace(/,/, "."));
+      rmd_cantidad += clean(val.rmd_cantidad);
+      rmd_puntaje += clean(val.rmd_puntaje);
       //targets (10)
-      tgt_pedidos_rechazados += parseFloat(
+      tgt_pedidos_rechazados += clean(
         val.tgt_pedidos_rechazados.replace(/,/, ".")
       );
-      tgt_bultos_rechazados += parseFloat(
+      tgt_bultos_rechazados += clean(
         val.tgt_bultos_rechazados.replace(/,/, ".")
       );
-      tgt_prom_disp_km += parseFloat(val.tgt_prom_disp_km.replace(/,/, "."));
-      tgt_prom_disp_tiempo += parseFloat(
-        val.tgt_prom_disp_tiempo.replace(/,/, ".")
-      );
-      tgt_prom_dqi += parseFloat(val.tgt_prom_dqi.replace(/,/, "."));
-      tgt_prom_eficacia_mod += parseFloat(
+      tgt_prom_disp_km += clean(val.tgt_prom_disp_km);
+      tgt_prom_disp_tiempo += clean(val.tgt_prom_disp_tiempo.replace(/,/, "."));
+      tgt_prom_dqi += clean(val.tgt_prom_dqi);
+      tgt_prom_eficacia_mod += clean(
         val.tgt_prom_eficacia_mod.replace(/,/, ".")
       );
-      tgt_prom_inicio_cierre += parseFloat(
+      tgt_prom_inicio_cierre += clean(
         val.tgt_prom_inicio_cierre.replace(/,/, ".")
       );
-      tgt_prom_uso_ontime += parseFloat(
-        val.tgt_prom_uso_ontime.replace(/,/, ".")
-      );
-      tgt_rmd_cantidad += parseFloat(val.tgt_rmd_cantidad.replace(/,/, "."));
-      tgt_prom_rmd += parseFloat(val.tgt_prom_rmd.replace(/,/, "."));
+      tgt_prom_uso_ontime += clean(val.tgt_prom_uso_ontime.replace(/,/, "."));
+      tgt_rmd_cantidad += clean(val.tgt_rmd_cantidad);
+      tgt_prom_rmd += clean(val.tgt_prom_rmd);
       //contador
       counter += 1;
 
@@ -149,8 +141,17 @@ const Indicadores = ({ navigation }) => {
     prom_disp_tiempo = dispersion_tiempos / counter;
     prom_inicio_cierre = inicio_cierre / counter;
     prom_uso_ontime = ontime_uso / counter;
-    prom_rmd = rmd_puntaje / counter;
-    prom_dqi = dqi / counter;
+    if (rmd_cantidad > 0) {
+      prom_rmd = rmd_puntaje / rmd_cantidad;
+    } else {
+      prom_rmd = "Sin puntajes";
+    }
+    if (dqi > 0) {
+      prom_dqi = dqi / counter;
+    } else {
+      prom_dqi = 0;
+    }
+
     prom_eficacia_mod = eficacia_modulaciones / counter;
     prom_rmd_cantidad = rmd_cantidad / counter;
 
