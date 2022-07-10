@@ -92,36 +92,26 @@ const Indicadores = ({ navigation }) => {
       bultos_rechazados += clean(val.bultos_rechazados);
       bultos_ruteado += clean(val.bultos_ruteado);
       dispersion_km += clean(val.dispersion_km);
-      dispersion_tiempos += clean(val.dispersion_tiempos.replace(/,/, "."));
+      dispersion_tiempos += clean(val.dispersion_tiempos);
       dqi += clean(val.dqi);
-      eficacia_modulaciones += clean(
-        val.eficacia_modulaciones.replace(/,/, ".")
-      );
+      eficacia_modulaciones += clean(val.eficacia_modulaciones);
       inicio_cierre += clean(val.inicio_cierre);
       modulaciones += clean(val.modulaciones);
       no_modulados += clean(val.no_modulados);
       ontime_uso += clean(val.ontime_uso);
       pedidos_ruteados += clean(val.pedidos_ruteados);
-      pedidos_rechazados += clean(val.pedidos_rechazados.replace(/,/, "."));
+      pedidos_rechazados += clean(val.pedidos_rechazados);
       rmd_cantidad += clean(val.rmd_cantidad);
       rmd_puntaje += clean(val.rmd_puntaje);
       //targets (10)
-      tgt_pedidos_rechazados += clean(
-        val.tgt_pedidos_rechazados.replace(/,/, ".")
-      );
-      tgt_bultos_rechazados += clean(
-        val.tgt_bultos_rechazados.replace(/,/, ".")
-      );
+      tgt_pedidos_rechazados += clean(val.tgt_pedidos_rechazados);
+      tgt_bultos_rechazados += clean(val.tgt_bultos_rechazados);
       tgt_prom_disp_km += clean(val.tgt_prom_disp_km);
-      tgt_prom_disp_tiempo += clean(val.tgt_prom_disp_tiempo.replace(/,/, "."));
+      tgt_prom_disp_tiempo += clean(val.tgt_prom_disp_tiempo);
       tgt_prom_dqi += clean(val.tgt_prom_dqi);
-      tgt_prom_eficacia_mod += clean(
-        val.tgt_prom_eficacia_mod.replace(/,/, ".")
-      );
-      tgt_prom_inicio_cierre += clean(
-        val.tgt_prom_inicio_cierre.replace(/,/, ".")
-      );
-      tgt_prom_uso_ontime += clean(val.tgt_prom_uso_ontime.replace(/,/, "."));
+      tgt_prom_eficacia_mod += clean(val.tgt_prom_eficacia_mod);
+      tgt_prom_inicio_cierre += clean(val.tgt_prom_inicio_cierre);
+      tgt_prom_uso_ontime += clean(val.tgt_prom_uso_ontime);
       tgt_rmd_cantidad += clean(val.tgt_rmd_cantidad);
       tgt_prom_rmd += clean(val.tgt_prom_rmd);
       //contador
