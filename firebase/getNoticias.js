@@ -6,8 +6,8 @@ async function getNoticias() {
     const items = [];
     const q = query(
       collection(db, "novedades"),
-      limit(10),
-      orderBy("fecha", "desc")
+      limit(15),
+      orderBy("fechaCreacion", "desc")
     );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
